@@ -38,3 +38,15 @@ export interface LoginMutation {
 export interface GlobalError {
     error: string;
 }
+
+export interface Art {
+    _id: string;
+    title: string;
+    art: string | null;
+    userId: string;
+}
+
+export interface ArtMutation {
+    title: string;
+    art: string | null;
+}
