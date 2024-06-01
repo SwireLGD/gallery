@@ -7,7 +7,7 @@ import imageNotAvailable from '../../../../assets/imageNotAvailable.png';
 import { apiURL } from "../../../constants";
 import { deleteArt } from "../artsThunks";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface Props {
     _id: string;
@@ -26,7 +26,6 @@ const ArtItem: React.FC<Props> = ({ _id, title, image, userId, author }) => {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const deleting = useAppSelector(selectDeleting);
-    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
 
     let cardImage = imageNotAvailable;
