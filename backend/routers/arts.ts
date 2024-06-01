@@ -80,3 +80,5 @@ artsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
         return next(e);
     }
 });
+
+export default artsRouter;
