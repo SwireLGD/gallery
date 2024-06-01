@@ -1,16 +1,16 @@
 import { Schema, Types, model } from "mongoose";
 import User from "./User";
 
-const gallerySchema = new Schema({
+const artSchema = new Schema({
     title: {
         type: String,
         required: true,
     },
-    image: {
+    art: {
         type: String || null,
         required: true,
     },
-    user: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         validate: {
@@ -20,6 +20,6 @@ const gallerySchema = new Schema({
     },
 });
 
-const gallery = model('Gallery', gallerySchema);
+const Art = model('Art', artSchema);
 
-export default gallery;
+export default Art;

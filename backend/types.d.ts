@@ -1,30 +1,5 @@
 import {Types} from "mongoose";
 
-export interface TrackMutation {
-    album: string;
-    title: string;
-    duration?: string;
-    isPublished: boolean;
-    userId: Types.ObjectId;
-}
-
-export interface ArtistMutation {
-    name: string;
-    image?: string | null;
-    info?: string;
-    isPublished: boolean;
-    userId: Types.ObjectId;
-}
-
-export interface AlbumMutation {
-    artist: string;
-    title: string;
-    issueDate: number;
-    image?: string | null;
-    isPublished: boolean;
-    userId: Types.ObjectId;
-}
-
 export interface UserFields {
     email: string;
     password: string;
@@ -41,3 +16,9 @@ interface UserMethods {
 }
 
 type UserModel = Model<UserFields, {}, UserMethods>;
+
+export interface ArtMutation {
+    title: string;
+    art: string | null;
+    userId: Types.ObjectId;
+}
