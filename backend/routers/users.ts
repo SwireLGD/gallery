@@ -3,7 +3,7 @@ import User from '../models/User';
 import mongoose from 'mongoose';
 import { OAuth2Client } from 'google-auth-library';
 import config from '../config';
-import { clearImages, imagesUpload } from '../multer';
+import { imagesUpload } from '../multer';
 
 const usersRouter = express.Router();
 const client = new OAuth2Client(config.google.clientId);
@@ -119,3 +119,7 @@ usersRouter.delete('/sessions', async (req, res, next) => {
 });
 
 export default usersRouter;
+
+function clearImages(filename: string) {
+    throw new Error('Function not implemented.');
+}

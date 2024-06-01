@@ -13,7 +13,7 @@ const ArtForm: React.FC<Props> = ({ onSubmit }) => {
     const isCreating = useAppSelector(selectCreateLoading);
     const [state, setState] = useState<ArtMutation>({
         title: '',
-        art: null,
+        image: null,
     });
 
     const submitFormHandler = (e: React.FormEvent) => {
@@ -22,8 +22,8 @@ const ArtForm: React.FC<Props> = ({ onSubmit }) => {
             alert("Title is required");
             return;
         }
-        if (!state.art) {
-            alert("Art file is required");
+        if (!state.image) {
+            alert("image file is required");
             return;
         }
         onSubmit(state);
@@ -56,8 +56,8 @@ const ArtForm: React.FC<Props> = ({ onSubmit }) => {
                 <Grid item xs>
                     <FileInput
                         onChange={fileInputChangeHandler}
-                        name="art"
-                        label="Art"
+                        name="image"
+                        label="image"
                     />
                 </Grid>
                 <Grid item xs>

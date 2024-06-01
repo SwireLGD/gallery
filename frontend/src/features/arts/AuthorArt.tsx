@@ -1,18 +1,22 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { fetchArtsByUserId } from "./artsThunks";
 import { selectArts, selectFetchLoading } from "./artsSlice";
-import { fetchArts } from "./artsThunks";
 import { CircularProgress, Grid } from "@mui/material";
 import ArtItem from "./components/ArtItem";
 
-const Arts = () => {
+const ArtsByAuthor = () => {
+    const { userId } = useParams<{ userId: string }>();
     const dispatch = useAppDispatch();
     const arts = useAppSelector(selectArts);
     const isLoading = useAppSelector(selectFetchLoading);
 
     useEffect(() => {
-        dispatch(fetchArts());
-    }, [dispatch]);
+        if (userId) {
+            dispatch(fetchArtsByUserId(userId));
+        }
+    }, [dispatch, userId]);
 
     return (
         <Grid container direction="column" gap={2}>
@@ -23,22 +27,20 @@ const Arts = () => {
             ) : (
                 <Grid item container spacing={2}>
                     {arts.length > 0 ? (
-                        arts.map(art => (
+                        arts.map((art) => (
                             <Grid item key={art._id} xs={12} sm={6} md={4} lg={3}>
-                                <div style={{ flex: '1 1 auto', display: 'flex', justifyContent: 'space-between' }}>
-                                    <ArtItem
-                                        _id={art._id}
-                                        title={art.title}
-                                        image={art.image}
-                                        userId={art.userId}
-                                        author={art.author}
-                                    />
-                                </div>
+                                <ArtItem
+                                    _id={art._id}
+                                    title={art.title}
+                                    image={art.image}
+                                    userId={art.userId}
+                                    author={art.author}
+                                />
                             </Grid>
                         ))
                     ) : (
                         <Grid item>
-                            <p>No arts available.</p>
+                            <p>No arts available for this author.</p>
                         </Grid>
                     )}
                 </Grid>
@@ -47,4 +49,4 @@ const Arts = () => {
     );
 };
 
-export default Arts;
+export default ArtsByAuthor;

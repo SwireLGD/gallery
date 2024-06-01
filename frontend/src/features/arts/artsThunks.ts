@@ -19,6 +19,22 @@ export const fetchArts = createAsyncThunk<Art[]>(
     }
 );
 
+export const fetchArtsByUserId = createAsyncThunk<Art[], string>(
+    'arts/fetchArtsByUserId',
+    async (userId, { rejectWithValue }) => {
+        try {
+            const response = await axiosApi.get<Art[]>(`/arts/author/${userId}`);
+            return response.data;
+        } catch (e) {
+            if (axios.isAxiosError(e) && e.response) {
+                return rejectWithValue(e.response.data);
+            } else {
+                return rejectWithValue({ error: 'An unknown error occurred' });
+            }
+        }
+    }
+);
+
 export const createArt = createAsyncThunk<void, ArtMutation>(
     'arts/createArt',
     async (artMutation, { rejectWithValue }) => {

@@ -7,12 +7,13 @@ import imageNotAvailable from '../../../../assets/imageNotAvailable.png';
 import { apiURL } from "../../../constants";
 import { deleteArt } from "../artsThunks";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Props {
     _id: string;
     title: string;
     author: string;
-    art: string | null;
+    image: string | null;
     userId: string | { _id: string };
 }
 
@@ -21,16 +22,17 @@ const ImageCardMedia = styled(CardMedia)({
     paddingTop: '75%', 
 });
 
-const ArtItem: React.FC<Props> = ({ _id, title, art, userId, author }) => {
+const ArtItem: React.FC<Props> = ({ _id, title, image, userId, author }) => {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const deleting = useAppSelector(selectDeleting);
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
 
     let cardImage = imageNotAvailable;
 
-    if (art) {
-        cardImage = apiURL + '/public/' + art;
+    if (image) {
+        cardImage = apiURL + '/public/' + image;
     }
 
     const handleDelete = () => {
@@ -62,9 +64,16 @@ const ArtItem: React.FC<Props> = ({ _id, title, art, userId, author }) => {
                     <Typography variant="h6" component="div" onClick={handleClickOpen} sx={{cursor: "pointer"}}>
                         {title}
                     </Typography>
-                    <Typography variant="subtitle2" component="div" color="textSecondary">
-                        By: {author}
-                    </Typography>
+                    <Link to={`/author/${userId}`} style={{ textDecoration: 'none' }}>
+                        <Typography
+                            variant="subtitle2"
+                            component="div"
+                            color="textSecondary"
+                            style={{ cursor: 'pointer' }}
+                        >
+                            By: {author}
+                        </Typography>
+                    </Link>
                 </CardContent>
                 <Box>
                     {canDelete && (
@@ -78,7 +87,7 @@ const ArtItem: React.FC<Props> = ({ _id, title, art, userId, author }) => {
             <Dialog open={open} onClose={handleClose} maxWidth="lg">
                 <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
-                    <img src={cardImage} alt={title} style={{ maxWidth: '100%', maxHeight: '80vh' }} /> 
+                    <img src={cardImage} alt={title} style={{ maxWidth: '800px', maxHeight: '80vh' }} /> 
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

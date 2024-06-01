@@ -19,7 +19,7 @@ type UserModel = Model<UserFields, {}, UserMethods>;
 
 export interface ArtMutation {
     title: string;
-    art: string | null;
+    image: string | null;
     userId: Types.ObjectId;
     author: string;
 }

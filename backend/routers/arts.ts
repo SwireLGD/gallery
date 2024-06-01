@@ -1,9 +1,9 @@
 import express from "express";
-import { clearImages, imagesUpload } from "../multer";
 import auth, { RequestWithUser } from "../middleware/auth";
 import { ArtMutation } from "../types";
 import Art from "../models/Art";
 import mongoose from "mongoose";
+import { imagesUpload } from "../multer";
 
 const artsRouter = express.Router();
 
@@ -16,15 +16,16 @@ artsRouter.get('/', async (req, res) => {
     }
 });
 
-artsRouter.get('/:authorId', async (req, res) => {
+artsRouter.get('/author/:userId', async (req, res) => {
     try {
-        const authorId = req.params.authorId;
-        const arts = await Art.find({ userId: authorId });
+        const userId = req.params.userId;
+        const arts = await Art.find({ userId });
         return res.send(arts);
     } catch (e) {
         return res.sendStatus(500);
     }
 });
+
 
 artsRouter.post('/', auth, imagesUpload.single('image'), async (req: RequestWithUser, res, next) => {
     if (!req.user) {
@@ -33,7 +34,7 @@ artsRouter.post('/', auth, imagesUpload.single('image'), async (req: RequestWith
 
     const artData: ArtMutation = {
         title: req.body.title,
-        art: req.file ? req.file.filename : null,
+        image: req.file ? req.file.filename : null,
         author: req.user.displayName,
         userId: req.user._id,
     };
@@ -84,3 +85,7 @@ artsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
 });
 
 export default artsRouter;
+
+function clearImages(filename: string) {
+    throw new Error("Function not implemented.");
+}

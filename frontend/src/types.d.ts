@@ -42,12 +42,12 @@ export interface GlobalError {
 export interface Art {
     _id: string;
     title: string;
-    art: string | null;
+    image: string | null;
     userId: string;
     author: string;
 }
 
 export interface ArtMutation {
     title: string;
-    art: string | null;
+    image: string | null;
 }

@@ -33,32 +33,32 @@ const run = async () => {
 
     const arts = await Art.create({
         title: 'art1',
-        art: 'fixtures/art1.jpg',
+        image: 'fixtures/art1.jpg',
         author: user1.displayName,
         userId: user1._id,
     }, {
         title: 'art2',
-        art: 'fixtures/art2.jpg',
+        image: 'fixtures/art2.jpg',
         author: user1.displayName,
         userId: user1._id,
     }, {
         title: 'art3',
-        art: 'fixtures/art3.jpg',
+        image: 'fixtures/art3.jpg',
         author: user1.displayName,
         userId: user1._id,
     }, {
         title: 'art4',
-        art: 'fixtures/art4.jpg',
+        image: 'fixtures/art4.jpg',
         author: user2.displayName,
         userId: user2._id,
     }, {
         title: 'art5',
-        art: 'fixtures/art5.jpg',
+        image: 'fixtures/art5.jpg',
         author: user2.displayName,
         userId: user2._id,
     }, {
         title: 'art6',
-        art: 'fixtures/art6.jpg',
+        image: 'fixtures/art6.jpg',
         author: user2.displayName,
         userId: user2._id,
     });

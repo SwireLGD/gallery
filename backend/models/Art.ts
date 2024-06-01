@@ -6,7 +6,7 @@ const artSchema = new Schema({
         type: String,
         required: true,
     },
-    art: {
+    image: {
         type: String || null,
         required: true,
     },
