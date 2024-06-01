@@ -14,7 +14,7 @@ artsRouter.get('/', async (req, res) => {
         let arts;
 
         if (user) {
-            arts = await Art.find({ user }).populate('user');
+            arts = await Art.find({ userId: user }).populate('userId');
         } else {
             arts = await Art.find();
         }
