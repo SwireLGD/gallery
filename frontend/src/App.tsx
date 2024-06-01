@@ -1,8 +1,24 @@
+import { Container, Typography } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+import Arts from "./features/arts/Arts";
+import Register from "./features/users/Register";
+import Login from "./features/users/Login";
+
 const App = () => {
   return (
-    <>
-    </>
+      <>
+          <main>
+              <Container maxWidth="xl">
+                  <Routes>
+                      <Route path='/' element={<Arts />} />
+                      <Route path='/register' element={<Register/>} />
+                      <Route path='/login' element={<Login />} />
+                      <Route path="*" element={<Typography variant="h2">Not Found</Typography>} />
+                  </Routes>
+              </Container>
+          </main>
+      </>
   );
-}
+};
 
 export default App;
