@@ -20,7 +20,7 @@ const App = () => {
                       <Route path='/register' element={<Register/>} />
                       <Route path='/login' element={<Login />} />
                       <Route path="/new-art" element={<NewArt />} />
-                      <Route path="/author/:userId" element={<ArtsByAuthor />} />
+                      <Route path="/arts/author/:userId" element={<ArtsByAuthor />} />
                       <Route path="*" element={<Typography variant="h2">Not Found</Typography>} />
                   </Routes>
               </Container>

@@ -64,7 +64,7 @@ const ArtItem: React.FC<Props> = ({ _id, title, image, userId, author }) => {
                     <Typography variant="h6" component="div" onClick={handleClickOpen} sx={{cursor: "pointer"}}>
                         {title}
                     </Typography>
-                    <Link to={`/author/${userId}`} style={{ textDecoration: 'none' }}>
+                    <Link to={`/arts/author/${userId}`} style={{ textDecoration: 'none' }}>
                         <Typography
                             variant="subtitle2"
                             component="div"

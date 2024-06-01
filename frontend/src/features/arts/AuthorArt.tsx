@@ -1,16 +1,18 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { fetchArtsByUserId } from "./artsThunks";
 import { selectArts, selectFetchLoading } from "./artsSlice";
-import { CircularProgress, Grid } from "@mui/material";
+import { Button, CircularProgress, Grid } from "@mui/material";
 import ArtItem from "./components/ArtItem";
+import { selectUser } from "../users/usersSlice";
 
 const ArtsByAuthor = () => {
-    const { userId } = useParams<{ userId: string }>();
+    const { userId } = useParams();
     const dispatch = useAppDispatch();
     const arts = useAppSelector(selectArts);
     const isLoading = useAppSelector(selectFetchLoading);
+    const user = useAppSelector(selectUser);
 
     useEffect(() => {
         if (userId) {
@@ -20,6 +22,15 @@ const ArtsByAuthor = () => {
 
     return (
         <Grid container direction="column" gap={2}>
+            {user && user._id === userId && (
+                <Grid item>
+                    <Link to="/new-art">
+                        <Button variant="contained" color="primary">
+                            Add art
+                        </Button>
+                    </Link>
+                </Grid>
+            )}
             {isLoading ? (
                 <Grid item container justifyContent="center">
                     <CircularProgress />
