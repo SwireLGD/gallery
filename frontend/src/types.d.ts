@@ -44,6 +44,7 @@ export interface Art {
     title: string;
     art: string | null;
     userId: string;
+    author: string;
 }
 
 export interface ArtMutation {

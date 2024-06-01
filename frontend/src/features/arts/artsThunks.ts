@@ -3,11 +3,11 @@ import { Art, ArtMutation } from "../../types";
 import axiosApi from "../../axiosApi";
 import axios from "axios";
 
-export const fetchArts = createAsyncThunk<Art[], string | undefined>(
+export const fetchArts = createAsyncThunk<Art[]>(
     'arts/fetchArts',
-    async (user, { rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
         try {
-            const response = await axiosApi.get<Art[]>(user ? `/arts?user=${user}` : '/arts');
+            const response = await axiosApi.get<Art[]>('/arts');
             return response.data;
         } catch (e) {
             if (axios.isAxiosError(e) && e.response) {

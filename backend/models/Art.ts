@@ -10,6 +10,10 @@ const artSchema = new Schema({
         type: String || null,
         required: true,
     },
+    author: {
+        type: String,
+        required: true,
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',

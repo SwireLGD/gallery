@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { selectArts, selectFetchLoading } from "./artsSlice";
 import { fetchArts } from "./artsThunks";
 import { CircularProgress, Grid } from "@mui/material";
-import ArtItem from "./components/artItem";
+import ArtItem from "./components/ArtItem";
 
 const Arts = () => {
     const dispatch = useAppDispatch();
@@ -21,16 +21,20 @@ const Arts = () => {
                     <CircularProgress />
                 </Grid>
             ) : (
-                <Grid item container gap={2}>
+                <Grid item container spacing={2}>
                     {arts.length > 0 ? (
                         arts.map(art => (
-                            <ArtItem
-                                key={art._id}
-                                _id={art._id}
-                                title={art.title}
-                                art={art.art}
-                                userId={art.userId}
-                            />
+                            <Grid item key={art._id} xs={12} sm={6} md={4} lg={3}>
+                                <div style={{ flex: '1 1 auto', display: 'flex', justifyContent: 'space-between' }}>
+                                    <ArtItem
+                                        _id={art._id}
+                                        title={art.title}
+                                        art={art.art}
+                                        userId={art.userId}
+                                        author={art.author}
+                                    />
+                                </div>
+                            </Grid>
                         ))
                     ) : (
                         <Grid item>
@@ -41,6 +45,7 @@ const Arts = () => {
             )}
         </Grid>
     );
+    
 };
 
 export default Arts;

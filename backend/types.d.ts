@@ -21,4 +21,5 @@ export interface ArtMutation {
     title: string;
     art: string | null;
     userId: Types.ObjectId;
+    author: string;
 }

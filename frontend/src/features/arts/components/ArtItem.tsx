@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import { Button, Card, CardActions, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Box, CircularProgress } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../users/usersSlice";
-import { selectFetchLoading } from "../artsSlice";
+import { selectDeleting } from "../artsSlice";
 import imageNotAvailable from '../../../../assets/imageNotAvailable.png';
 import { apiURL } from "../../../constants";
 import { deleteArt } from "../artsThunks";
@@ -11,19 +11,20 @@ import { useState } from "react";
 interface Props {
     _id: string;
     title: string;
+    author: string;
     art: string | null;
-    userId: string;
+    userId: string | { _id: string };
 }
 
 const ImageCardMedia = styled(CardMedia)({
     height: 0,
-    paddingTop: '56.25%' 
+    paddingTop: '75%', 
 });
 
-const ArtItem: React.FC<Props> = ({ _id, title, art, userId }) => {
+const ArtItem: React.FC<Props> = ({ _id, title, art, userId, author }) => {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
-    const isLoading = useAppSelector(selectFetchLoading);
+    const deleting = useAppSelector(selectDeleting);
     const [open, setOpen] = useState(false);
 
     let cardImage = imageNotAvailable;
@@ -44,11 +45,13 @@ const ArtItem: React.FC<Props> = ({ _id, title, art, userId }) => {
         setOpen(false);
     };
 
-    const canDelete = user?.role === 'admin' || (user?._id === userId);
+    const userIdString = typeof userId === 'object' ? userId._id : userId;
 
+    const canDelete = user?.role === 'admin' || (user?._id === userIdString);
+    
     return (
         <>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{ width: 300 }}> 
                 <ImageCardMedia
                     image={cardImage}
                     title={title}
@@ -56,23 +59,26 @@ const ArtItem: React.FC<Props> = ({ _id, title, art, userId }) => {
                     style={{ cursor: 'pointer' }}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography variant="h6" component="div" onClick={handleClickOpen} sx={{cursor: "pointer"}}>
                         {title}
                     </Typography>
+                    <Typography variant="subtitle2" component="div" color="textSecondary">
+                        By: {author}
+                    </Typography>
                 </CardContent>
-                <CardActions>
+                <Box>
                     {canDelete && (
-                        <Button size="small" onClick={handleDelete} disabled={isLoading}>
-                            Delete
+                        <Button size="small" onClick={handleDelete} disabled={deleting}>
+                            {deleting ? <CircularProgress size={24} /> : "Delete"}
                         </Button>
                     )}
-                </CardActions>
+                </Box>
             </Card>
-
+    
             <Dialog open={open} onClose={handleClose} maxWidth="lg">
                 <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
-                    <img src={cardImage} alt={title} style={{ width: '100%', height: 'auto' }} />
+                    <img src={cardImage} alt={title} style={{ maxWidth: '100%', maxHeight: '80vh' }} /> 
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
@@ -81,7 +87,7 @@ const ArtItem: React.FC<Props> = ({ _id, title, art, userId }) => {
                 </DialogActions>
             </Dialog>
         </>
-    );
+    ); 
 };
 
 export default ArtItem;

@@ -9,16 +9,17 @@ const artsRouter = express.Router();
 
 artsRouter.get('/', async (req, res) => {
     try {
-        const user = typeof req.query.user === 'string' ? req.query.user : undefined;
+        const arts = await Art.find();
+        return res.send(arts);
+    } catch (e) {
+        return res.sendStatus(500);
+    }
+});
 
-        let arts;
-
-        if (user) {
-            arts = await Art.find({ userId: user }).populate('userId');
-        } else {
-            arts = await Art.find();
-        }
-
+artsRouter.get('/:authorId', async (req, res) => {
+    try {
+        const authorId = req.params.authorId;
+        const arts = await Art.find({ userId: authorId });
         return res.send(arts);
     } catch (e) {
         return res.sendStatus(500);
@@ -33,6 +34,7 @@ artsRouter.post('/', auth, imagesUpload.single('image'), async (req: RequestWith
     const artData: ArtMutation = {
         title: req.body.title,
         art: req.file ? req.file.filename : null,
+        author: req.user.displayName,
         userId: req.user._id,
     };
 
